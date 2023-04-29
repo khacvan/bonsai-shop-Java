@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+
+<header th:fragment="header_menu">
+  <div class="header-1">
+    <div class="share">
+      <span> follow us : </span>
+      <a href="#" class="fab fa-facebook-f faybuc"></a>
+      <a href="#" class="fab fa-twitter"></a>
+      <a href="#" class="fab fa-instagram"></a>
+      <a th:href="@{/login}" class="fab fa-linkedin"></a>
+    </div>
+
+    <div class="call">
+      <span> Call me : </span>
+      <a href="#">09999999999</a>
+    </div>
+
+  </div>
+
+  <div class="header-2">
+    <a th:href="@{/}" class="logo"> <i class="fas fa-seedling"></i> LOGO </a>
+
+    <form action="" class="search-bar-container form-inline" th:action="@{/search}" method="get">
+      <input type="search" id="search-bar" placeholder="search here..."  name="keyword" class="form-control mr-sm-2"
+             th:value="${searchKeyword}">
+      <label for="search-bar" type="submit" class="fas fa-search"></label>
+    </form>
+  </div>
+
+  <div class="header-3">
+    <div id="menu-bar" class="fas fa-bars"></div>
+    <nav class="navbar">
+      <a th:href="@{/}">home</a>
+      <a href="#category">category</a>
+      <a href="#product">product</a>
+      <a th:href="@{/orders}">Orders</a>
+      <a href="#footer">contact</a>
+      <th:block sec:authorize="!isAuthenticated()">
+          <a class="" th:href="@{/login}">Login</a>
+      </th:block>
+
+
+      <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+        <input type="submit"/>
+      </form>
+      <th:block sec:authorize="isAuthenticated()">
+        <a class="" href="javascript: document.logoutForm.submit()">Logout</a>
+      </th:block>
+
+
+
+    </nav>
+    <div class="icons">
+      <a class="fas fa-shopping-cart fa-2x" th:href="@{/cart}"></a>
+
+      <a href="#" class="fas fa-heart"></a>
+
+      <th:block sec:authorize="isAuthenticated()">
+        <a th:href="@{/account_details}" class="fas fa-user-circle" th:title="'Your account'" sec:authentication="principal.fullName"></a>
+      </th:block>
+    </div>
+  </div>
+</header>
+
+
+<div th:fragment="search_nav" class="row">
+  <div class="col-md">
+    <th:block sec:authorize="isAuthenticated()">
+      <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+        <input type="submit" value="Logout" />
+      </form>
+    </th:block>
+
+    <nav class="navbar navbar-expand-sm bg-light">
+      <div class="collapse navbar-collapse" id="searchNavbar">
+        <form class="form-inline" th:action="@{/search}" method="get">
+          <input type="search" name="keyword" class="form-control mr-sm-2"
+                 th:value="${searchKeyword}"
+                 placeholder="keyword" required />
+          <input type="submit" value="Search" class="btn btn-outline-success" />
+        </form>
+<!--        <ul class="navbar-nav">-->
+<!--          <th:block sec:authorize="isAuthenticated()">-->
+<!--            <li class="nav-item">-->
+<!--              <b><a class="nav-link" th:href="@{/account_details}"-->
+<!--                    sec:authentication="principal.fullName"></a></b>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item">-->
+<!--              <a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>&lt;!&ndash; thay vì viết script thì có thể viết trực tiếp ở đây &ndash;&gt;-->
+<!--            </li>-->
+<!--          </th:block>-->
+<!--        </ul>-->
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+
+<section th:fragment="footer" class="footer">
+  <div class="box-container">
+    <div class="box">
+      <h3>about me</h3>
+      <p>LMAO TRACH DONG</p>
+    </div>
+    <div class="box">
+      <h3>quick links</h3>
+      <a href="#">home</a>
+      <a href="#">category</a>
+      <a href="#">product</a>
+      <a href="#">deal</a>
+      <a href="#">contact</a>
+    </div>
+    <div class="box">
+      <h3>follow me</h3>
+      <a href="#">facebook</a>
+      <a href="#">twitter</a>
+      <a href="#">instagram</a>
+      <a href="#">linked</a>
+    </div>
+  </div>
+  <h1 class="credit"> created by <span> van nguyen khac </span> | all rights reserved! </h1>
+</section>
+
+
+</body>
+</html>

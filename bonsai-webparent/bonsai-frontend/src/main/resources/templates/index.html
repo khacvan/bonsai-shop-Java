@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments :: page_head('Bonsai Shop', 'none')" />
+
+<body>
+<header th:replace="navigation :: header_menu"></header>
+<section th:replace="fragments :: slider"></section>
+<section th:replace="fragments :: banner"></section>
+
+
+
+<section class="category" id="category">
+
+    <h1 class="heading"> shop by category </h1>
+
+        <div class="box-container">
+            <div class="box" th:each="cat : ${listCategories}">
+                <img th:src="@{${cat.imagePath}}" alt=""/>
+                <div class="content">
+                    <h3>[[${cat.name}]]</h3>
+                    <a th:href="@{'/c/' + ${cat.alias}}" class="btn">shop now</a>
+                </div>
+            </div>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+<section class="product" id="product">
+
+<h1 class="heading"> new products </h1>
+
+<div class="box-container">
+
+    <div class="box" th:each="product : ${latestProducts}">
+        <span class="discount" th:if="${product.discountPercent > 0}">([[${#numbers.formatDecimal(product.discountPercent, 1, 'COMMA', 2, 'POINT')}]] % off)</span>
+
+        <div class="icons">
+            <a href="#" class="fas fa-heart"></a>
+            <a href="#" class="fas fa-share"></a>
+            <a href="#" class="fas fa-eye"></a>
+        </div>
+        <img th:src="@{${product.getMainImagePath()}}" alt="">
+        <h3>[[${product.name}]]</h3>
+        <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+        </div>
+        <div class="quantity">
+            <span> quantity : </span>
+            <input type="number" min="1" max="100" value="1">
+        </div>
+
+        <div class="price">
+<!--            <span th:if="${product.discountPercent <= 0}">$ [[${product.price}]]</span>-->
+<!--            <del th:if="${product.discountPercent > 0}"><span>$ [[${product.price}]]</span></del>-->
+            $ [[${product.discountPrice}]] <span th:if="${product.discountPercent > 0}">$ [[${product.price}]]</span>
+        </div>
+        <a th:href="@{${product.URI}}" class="btn">add to cart</a>
+    </div>
+
+
+
+</div>
+
+</section>
+
+<section th:replace="fragments :: icon"></section>
+<section th:replace="fragments :: footer"></section>
+
+
+<!-- footer section ends -->
+
+<!-- scroll top button  -->
+<a href="#home" class="scroll-top fas fa-angle-up"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+<script>
+    $('#modalDialog').on('shown.bs.modal', function () {
+        var $modal = $(this);
+        var $modalDialog = $modal.find('.modal-dialog');
+        var modalDialogHeight = $modalDialog.outerHeight();
+        var windowHeight = $(window).height();
+        var topMargin = (windowHeight - modalDialogHeight) / 2;
+        $modalDialog.css('margin-top', topMargin + 'px');
+    });
+
+</script>
+
+</body>
+</html>

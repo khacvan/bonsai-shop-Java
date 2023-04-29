@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<head th:replace="fragments :: page_head(${pageTitle}, 'tag')" />
+
+
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="assets/img/login/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.css">
+
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="assets/css/util.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/login.css">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('assets/img/login/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<form  th:action="@{/create_customer}" method="post" th:object="${customer}" onsubmit="return checkEmailUnique(this);">
+					<span class="login100-form-title p-b-49">
+						Customer Register
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "First is required">
+						<span class="label-input100">First Name</span>
+
+						<input class="form-control input100" type="text" th:field="*{firstName}"
+							   required="required" maxlength="45" minlength="2" placeholder="Type your username">
+						<span class="focus-input100" data-symbol="&#xf206;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Last name is required">
+						<span class="label-input100">Last Name</span>
+
+						<input class="form-control input100" type="text" th:field="*{lastName}"
+							   required="required" maxlength="45" minlength="2" placeholder="Type your lastName">
+						<span class="focus-input100 " data-symbol="&#xf206;"></span>
+					</div>
+
+
+
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Last name is required">
+						<span class="label-input100">Email</span>
+
+						<input type="email" th:field="*{email}" class="form-control input100"
+							   required="required" maxlength="45" minlength="8" placeholder="Type your email">
+						<span class="focus-input100" data-symbol="&#xf0e0;"></span>
+					</div>
+
+
+
+
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
+						<span class="label-input100">Password</span>
+						<input type="password" th:field="*{password}" class="form-control input100"
+							   required="required" maxlength="15" minlength="6"
+							   oninput="checkPasswordMatch(document.getElementById('confirmPassword'))">
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+
+
+						<div class="wrap-input100 validate-input" data-validate="Password is required">
+							<span class="label-input100">Re-type Password:</span>
+							<input type="password" id="confirmPassword" class="form-control input100"
+								   required="required" maxlength="15" minlength="6"
+								   oninput="checkPasswordMatch(this)">
+							<span class="focus-input100" data-symbol="&#xf190;"></span>
+						</div>
+
+
+					<div class="wrap-input100 validate-input" data-validate="Phone is required">
+						<span class="label-input100">Phone</span>
+						<input type="text" th:field="*{phoneNumber}" class="form-control input100"
+							   required="required" maxlength="15" minlength="8" >
+						<span class="focus-input100" data-symbol="&#xf2b9;;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Address is required">
+						<span class="label-input100">Address Line 1</span>
+						<input type="text" th:field="*{addressLine1}" class="form-control input100"
+							   required="required" maxlength="64" minlength="3" >
+						<span class="focus-input100" data-symbol="&#xf2b9;"></span>
+					</div>
+
+
+
+					<div class="wrap-input100 validate-input" data-validate="Address is required">
+						<span class="label-input100">Address Line 2</span>
+						<input type="text" th:field="*{addressLine2}" class="form-control input100"
+							   required="required" maxlength="64" minlength="3" >
+
+						<span class="focus-input100" data-symbol="&#xf2b9;"></span>
+					</div>
+
+
+
+					<div class="wrap-input100 validate-input" data-validate="City is required">
+						<span class="label-input100">City:</span>
+						<input type="text" th:field="*{city}" class="form-control input100"
+							   maxlength="45" minlength="2" />
+						<span class="focus-input100" data-symbol="&#xf64f;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="City is required">
+						<span class="label-input100">Country:</span>
+						<select class="form-control input100" th:field="*{country}">
+							<th:block th:each="country : ${listCountries}">
+								<option th:value="${country.id}">[[${country.name}]]</option>
+							</th:block>
+						</select>
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="State is required">
+						<span class="label-input100">State:</span>
+						<input type="text" th:field="*{state}" class="form-control input100"
+							   maxlength="45" minlength="3" list="listStates" />
+						<datalist id="listStates"></datalist>
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="City is required">
+						<span class="label-input100">Postal Code:</span>
+						<input type="text" th:field="*{postalCode}" class="form-control input100"
+							   maxlength="10" minlength="2" />
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+
+					<br>
+
+
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit">
+								Sing Up
+							</button>
+						</div>
+					</div>
+
+					<div class="txt1 text-center p-t-54 p-b-20">
+						<span>
+							Or Sign Up Using
+						</span>
+					</div>
+
+					<div class="flex-c-m">
+						<a href="#" class="login100-social-item bg1">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg2">
+							<i class="fa fa-twitter"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg3">
+							<i class="fa fa-google"></i>
+						</a>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragments :: modal_dialog"></div>
+
+
+
+
+
+	<!--			<div class="text-center">-->
+<!--				<input type="submit" value="Create Account" class="btn btn-primary" />-->
+<!--			</div>-->
+
+
+
+
+</body>
+
+<script type="text/javascript">
+
+	contextPath = "[[@{/}]]";
+
+
+		function checkEmailUnique(form) {
+			url = contextPath + "customers/check_unique_email";
+			customerEmail = $("#email").val();
+			csrfValue = $("input[name='_csrf']").val();
+
+			params = {email: customerEmail, _csrf: csrfValue};
+
+			$.post(url, params, function (response) {
+				if (response == "OK") {
+					form.submit();
+				} else if (response == "Duplicated") {
+					showWarningModal("There is another cusotmer having the email " + customerEmail);
+				} else {
+					showErrorModal("Unknown response from server");
+				}
+			}).fail(function () {
+				showErrorModal("Could not connect to the server");
+			});
+
+			return false;
+		}
+</script>
+
+<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+<script type="text/javascript" th:src="@{/js/common_customer_form.js}"></script>
+
+<!--===============================================================================================-->
+<!--<script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>-->
+
+<!--===============================================================================================-->
+<script src="assets/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/bootstrap/js/popper.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/daterangepicker/moment.min.js"></script>
+<script src="assets/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="assets/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+
+</html>
+

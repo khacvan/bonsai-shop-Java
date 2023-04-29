@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: page_head('Categories - Shopping Cart Admin', 'none')" />
+
+<body>
+<div th:replace="navigation :: header_menu"></div>
+
+<div class="container-fluid">
+	<div>
+		<h2>Manage Categories</h2>
+				
+	</div>
+
+	<div class="row element-button">
+		<div class="col-sm-2">
+			<a class="btn btn-add btn-sm" th:href="@{/categories/new}"  title="Thêm"><i class="fas fa-plus"></i>
+				Thêm</a>
+		</div>
+
+		<div class="col-sm-2">
+			<a th:href="@{/categories/export/csv}"  class="btn btn-delete btn-sm btn-warning" type="button" title="In"><i
+					class="fas fa-print"></i> In dữ liệu</a>
+		</div>
+
+		<div class="col-sm-2">
+			<a class="btn btn-excel btn-sm" th:href="@{/categories/export/excel}" title="In"><i class="fas fa-file-excel"></i> Xuất
+				Excel</a>
+		</div>
+
+		<div class="col-sm-2">
+			<a class="btn btn-delete btn-sm pdf-file btn-danger" th:href="@{/categories/export/pdf}"  title="In"><i
+					class="fas fa-file-pdf"></i> Xuất PDF</a>
+		</div>
+	</div>
+
+
+	<div th:replace="fragments :: search_form_and_message('/categories/page/1')"></div>
+	<br>
+	
+	<div class="full-details">
+
+		<table class="table table-bordered table-striped table-hover table-responsive-xl">
+			<thead class="thead-dark">
+				<tr>
+					<th>ID</th>
+					<th>Category Image</th>
+					<th th:replace="fragments :: column_link('/categories', 'name', 'Category Name', 'none')" />						
+					<th class="hideable-column">Alias</th>
+					<th>Enabled</th>
+					<th></th>
+				</tr>								
+			</thead>
+			<tbody>
+				<tr th:each="cat : ${listCategories}">
+					<td>[[${cat.id}]]</td>
+					<td>
+						<img th:src="@{${cat.imagePath}}" style="width: 100px" class="img-fluid"/>
+					</td>
+					<td>[[${cat.name}]]</td>
+					<td class="hideable-column">[[${cat.alias}]]</td>
+					<td>
+						<div th:replace="fragments :: status(${cat.enabled}, 'category', '/categories/' + ${cat.id})"></div>
+					</td>
+					<td>
+						<div th:replace="fragments :: edit('category', '/categories/edit/' + ${cat.id})"></div>
+						&nbsp; 
+						<div th:replace="fragments :: delete('category', ${cat.id}, '/categories/delete/' + ${cat.id}, ${!cat.hasChildren})"></div>	 <!-- ${!cat.hasChildren} để kiểm tra category có con hay ko -->		
+					</td>					
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="less-details">
+		<div th:each="cat : ${listCategories}" class="row m-1">
+			<div class="col-4">
+				<img th:src="@{${cat.imagePath}}" style="width: 100px" class="img-fluid"/>			
+			</div>
+			<div class="col-8">
+				<div>[[${cat.name}]]</div>
+				<div class="mt-2">
+					<div th:replace="fragments :: status(${cat.enabled}, 'category', '/categories/' + ${cat.id})"></div>
+					&nbsp; 			
+					<div th:replace="fragments :: edit('category', '/categories/edit/' + ${cat.id})"></div>
+					&nbsp;
+					<div th:replace="fragments :: delete('category', ${cat.id}, '/categories/delete/' + ${cat.id}, ${!cat.hasChildren})"></div>
+				</div>
+			</div>
+			<div>&nbsp;</div>
+		</div>	
+	</div>
+		
+	<th:block th:unless="${keyword != null}">	
+		<div th:replace="fragments :: pagination('/categories', 'top-level categories')"></div>
+	</th:block>
+	
+	<div th:replace="modal_fragments :: confirm_modal"></div>
+	
+	<div th:replace="fragments :: footer"></div>
+	
+</div>
+
+</body>
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+	moduleURL = "[[@{/categories}]]";
+
+	$(document).ready(function() {
+		$(".link-delete1").on("click", function(e) {
+			e.preventDefault();
+			showDeleteConfirmModal($(this), 'category');
+		});
+	});
+</script>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<head th:replace="fragments :: page_head(${pageTitle}, 'tag')" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-23AtoeWnraGgcgk/I1tKwrlHOy8aGcJJzf3OJBlhblKjFZzIv/RbOIT5szcyw5wLNS5NoD0/2QKj/biACGcNkw==" crossorigin="anonymous" />
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5lWeyXFpC8AuWbU6HcsvS6MlvM+ooBnKT9MIcNVV" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<header th:replace="navigation :: header_menu"></header>
+
+<body>
+
+
+<section class="category" id="category">
+	<div th:replace="breadcrumb :: content"></div>
+
+	<h1 class="heading"> shop by category </h1>
+
+	<div class="row text-center">
+		<th:block th:each="cat : ${category.children}">
+			<div class="col" th:if="${cat.enabled == true}">
+				<a th:href="@{'/c/' + ${cat.alias}}">
+					<img th:src="@{${cat.imagePath}}" height="100" />
+					<br/>
+					<b>[[${cat.name}]]</b>
+				</a>
+			</div>
+		</th:block>
+	</div>
+
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<th:block th:each="product : ${listProducts}">
+			<div th:replace="product/product_fragment :: content"></div>
+		</th:block>
+	</div>
+
+	<div th:replace="fragments :: pagination('/c/' + ${category.alias}, 'products')"></div>
+
+</section>
+
+
+
+
+<section th:replace="navigation :: footer"></section>
+
+</body>
+</html>

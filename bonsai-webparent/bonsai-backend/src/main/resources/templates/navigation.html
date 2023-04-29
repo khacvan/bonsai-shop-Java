@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+
+<header th:fragment="header_menu">
+    <div class="header-1">
+        <div class="share">
+            <span> follow us : </span>
+            <a href="#" class="fab fa-facebook-f faybuc"></a>
+            <a href="#" class="fab fa-twitter"></a>
+            <a href="#" class="fab fa-instagram"></a>
+            <a href="#" class="fab fa-linkedin"></a>
+        </div>
+
+        <div class="call">
+            <span> Call me : </span>
+            <a href="#">09999999999</a>
+        </div>
+
+    </div>
+
+    <div class="header-2">
+        <a th:href="@{/}" class="logo"> <i class="fas fa-seedling"></i> BonSai </a>
+
+        <form action="" class="search-bar-container">
+            <input type="search" id="search-bar" placeholder="search here...">
+            <label for="search-bar" class="fas fa-search"></label>
+        </form>
+    </div>
+
+    <div class="header-3">
+        <div id="menu-bar" class="fas fa-bars"></div>
+        <nav class="navbar">
+            <a th:href="@{/}">home</a>
+
+            <th:block sec:authorize="hasAuthority('Admin')">
+                <a class="" th:href="@{/users}">Users</a>
+            </th:block>
+
+            <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                <a th:href="@{/categories}">category</a>
+                <a th:href="@{/brands}">brand</a>
+            </th:block>
+
+            <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Editor', 'Shipper')">
+                <a th:href="@{/products}">product</a>
+            </th:block>
+
+            <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
+                <a th:href="@{/customers}">Customers</a>
+            </th:block>
+
+
+            <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Shipper')">
+                <a class="" th:href="@{/orders}">Orders</a>
+            </th:block>
+
+            <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                <input type="submit"/>
+            </form>
+            <th:block sec:authorize="isAuthenticated()">
+                <a class="" th:href="@{/logout}" id="logoutLink">Logout</a>
+            </th:block>
+        </nav>
+        <div class="icons">
+            <a th:href="@{/account}" th:title="'Your account'" class="fas fa-user-circle"  sec:authentication="principal.fullname"></a>
+        </div>
+    </div>
+
+</header>
+
+<div th:fragment="search_nav" class="row">
+    <div class="col-md">
+        <th:block sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                <input type="submit" value="Logout" />
+            </form>
+        </th:block>
+
+        <nav class="navbar navbar-expand-sm bg-light">
+            <div class="collapse navbar-collapse" id="searchNavbar">
+                <form class="form-inline" th:action="@{/search}" method="get">
+                    <input type="search" name="keyword" class="form-control mr-sm-2"
+                           th:value="${searchKeyword}"
+                           placeholder="keyword" required />
+                    <input type="submit" value="Search" class="btn btn-outline-success" />
+                </form>
+                <ul class="navbar-nav">
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item">
+                            <b><a class="nav-link" th:href="@{/account_details}"
+                                  sec:authentication="principal.fullname"></a></b>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a><!-- thay vì viết script thì có thể viết trực tiếp ở đây -->
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+
+</body>
+</html>

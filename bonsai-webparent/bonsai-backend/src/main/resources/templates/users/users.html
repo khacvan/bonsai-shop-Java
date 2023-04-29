@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: page_head('Bonsai Shop Admin', 'none')"/>
+
+<body>
+
+<!-- header section starts  -->
+<header th:replace="navigation :: header_menu"></header>
+
+
+
+<section class="user" id="user">
+    <h1 class="heading"> manager user </h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+                            <a class="btn btn-add btn-sm" th:href="@{/users/new}"  title="Thêm"><i class="fas fa-plus"></i>
+                                Thêm</a>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <a th:href="@{/users/export/csv}"  class="btn btn-delete btn-sm btn-warning" type="button" title="In"><i
+                                    class="fas fa-print"></i> In dữ liệu</a>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <a class="btn btn-excel btn-sm" th:href="@{/users/export/excel}" title="In"><i class="fas fa-file-excel"></i> Xuất
+                                Excel</a>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm pdf-file btn-danger" th:href="@{/users/export/pdf}"  title="In"><i
+                                    class="fas fa-file-pdf"></i> Xuất PDF</a>
+                        </div>
+                    </div>
+
+
+                    <br>
+                    <div th:replace="fragments :: search_form_and_message('/users/page/1')"></div>
+                    <br>
+
+                    <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th class="hideable-column">
+                                <th th:replace="fragments :: column_link('/users', 'id', 'User ID', 'tag')"></th>
+                            </th>
+
+                            <th>Photos</th>
+
+                            <th class="hideable-column ">
+                            <th th:replace="fragments :: column_link('/users', 'email', 'E-mail', 'tag')"></th>
+                            </th>
+
+                            <th th:replace="fragments :: column_link('/users', 'firstName', 'First Name', 'none')"></th>
+
+                            <th th:replace="fragments :: column_link('/users', 'lastName', 'Last Name', 'none')"></th>
+
+                            <th>Roles</th>
+
+                            <th>Enable</th>
+
+                            <th>Control</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="user : ${listUsers}">
+                            <td class="hideable-column">[[${user.id}]]</td>
+                            <td>
+                                <div th:replace="fragments :: user_photos"></div>
+                            </td>
+                            <td class="hideable-column">[[${user.email}]]</td>
+                            <td>[[${user.firstName}]]</td>
+                            <td>[[${user.lastName}]]</td>
+                            <td>[[${user.roles}]]</td>
+                            <td>
+                                <div th:replace="fragments :: status(${user.enabled}, 'user', '/users/' + ${user.id})"></div>
+                            </td>
+                            <td>
+                                <div th:replace="fragments :: edit('user', '/users/edit/' + ${user.id})"></div>
+                                &nbsp;&nbsp;
+                                <div th:replace="fragments :: delete('user', ${user.id}, '/users/delete/' + ${user.id}, true)"></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments :: pagination('/users', 'users')"></div>
+
+</section>
+
+
+
+<div th:replace="modal_fragments :: confirm_modal"></div>
+
+
+<section th:replace="fragments :: footer"></section>
+
+
+</body>
+<script th:src="@{/js/common_list.js}"></script>
+
+<script type="text/javascript">
+    moduleURL = "[[@{/users}]]";
+
+    $(document).ready(function () {
+        $(".link-delete1").on("click", function (e) {
+            e.preventDefault();
+            // var deleteLink = $(this).attr("href");
+            // $("#deleteConfirmModal").modal("show");
+            // $("#confirmDeleteButton").attr("href", deleteLink);
+            showDeleteConfirmModal($(this), 'user');
+        });
+    });
+</script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+</html>

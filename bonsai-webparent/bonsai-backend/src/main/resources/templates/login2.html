@@ -1,0 +1,73 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+
+<!--&lt;!&ndash;<head th:replace="fragments :: page_head('Login Bonsai Shop', 'none')" />&ndash;&gt;-->
+
+<!--<head>-->
+
+<!--  <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>-->
+<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">-->
+<!--  <link rel="stylesheet" type="text/css" th:href="@{/style.css}" defer>-->
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" defer>-->
+<!--  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css"defer />-->
+
+
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>-->
+<!--  <script type="text/javascript" th:src="@{/js/script.js}" defer></script>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+
+
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; header section starts  &ndash;&gt;-->
+<!--<header th:replace="navigation :: header_menu"></header>-->
+
+
+
+
+
+
+<!--<div class="container-fluid text-center">-->
+
+<!--  <div>-->
+<!--    <img th:src="@{/images/product1.jpg}" class="img-fluid" width="500px" />-->
+<!--  </div>-->
+
+<!--  <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto">-->
+<!--    <div th:if="${param.error}">&lt;!&ndash; param là đối tượng của Spring Security &ndash;&gt;-->
+<!--      <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p> &lt;!&ndash; session là đối tượng của Spring Security &ndash;&gt;-->
+<!--    </div>-->
+
+<!--    <div th:if="${param.logout}">-->
+<!--      <p class="text-warning">You have been logged out.</p>-->
+<!--    </div>-->
+
+<!--    <div class="border border-secondary rounded p-3">-->
+<!--      <p>Access to Shopping Cart Control Panel</p>-->
+<!--      <p>-->
+<!--        <input type="email" name="email" class="form-control" placeholder="E-mail" required />-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        <input type="password" name="password" class="form-control" placeholder="Password" required />-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        <input type="checkbox" name="remember-me" />&nbsp;Remember Me-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        <input type="submit" value="Login" class="btn btn-primary" />-->
+<!--      </p>-->
+<!--    </div>-->
+<!--  </form>-->
+
+<!--</div>-->
+
+
+<!--&lt;!&ndash; footer section starts  &ndash;&gt;-->
+
+<!--<section th:replace="navigation :: footer"></section>-->
+
+<!--</body>-->
+<!--</html>-->

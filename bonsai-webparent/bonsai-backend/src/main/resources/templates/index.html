@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments :: page_head('Bonsai Shop Admin', 'none')"/>
+
+<body>
+
+<!-- header section starts  -->
+<header th:replace="navigation :: header_menu"></header>
+
+
+<!-- category section starts  -->
+
+<section class="category" id="category">
+    <h1 class="heading">    Welcome
+        <a th:href="@{/account}"
+           sec:authentication="principal.fullname"></a>
+        <span sec:authentication="principal.authorities"></span>
+    </h1>
+
+
+    <h1 > managed by system</h1>
+
+</section>
+
+
+
+<section th:replace="fragments :: footer"></section>
+
+
+</body>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+</html>
